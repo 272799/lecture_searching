@@ -1,3 +1,4 @@
+import json
 import os
 
 # get current working directory path
@@ -12,6 +13,13 @@ def read_data(file_name, field):
     :return: (list, string),
     """
     file_path = os.path.join(cwd_path, file_name)
+    with open(file_path, "r") as file_obj:
+        data = json.load(file_obj)
+    if field in data.keys():
+        return data[field]
+    else:
+        print(f"Field {field} not exist.")
+        return None
 
 
 def main():
@@ -20,3 +28,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+    my_data = read_data("sequential.json", "unordered_numbers")
+    print(my_data)
